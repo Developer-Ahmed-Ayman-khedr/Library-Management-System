@@ -1,0 +1,126 @@
+
+
+--------------------------------------------------------------------- Problem Statement ---------------------------------------------------------
+---------------------------------------------------------------------Library Management System --------------------------------------------------
+
+You have been assigned the task of developing a Library Management System using C++. The system should provide functionality for managing books, library members, and borrowing/returning books. The project should incorporate the following features:
+
+1. Book Management:
+   - Add new books to the library with details such as title, author, ISBN, and publication year.
+   - Remove books from the library.
+   - Search for books by title, author, or ISBN.
+   - Display a list of all books in the library.
+
+2. Member Management:
+   - Add new members to the library with details such as name, age, and contact information.
+   - Remove members from the library.
+   - Search for members by name or contact information.
+   - Display a list of all library members.
+
+3. Borrowing/Returning Books:
+   - Allow members to borrow books from the library, specifying the book's ISBN.
+   - Track the due date and return status of borrowed books.
+   - Display a list of borrowed books for each member.
+   - Allow members to return borrowed books.
+
+4. Additional Functionality:
+   - Implement error handling and validation to ensure data integrity.
+   - Provide a user-friendly menu-based interface for interacting with the system.
+   - Store book and member information in a file for persistent storage.
+   - Implement sorting and filtering options for displaying books and members.
+
+--------------------------------------------------------------------- Featuers ---------------------------------------------------------------------
+Modules/Components:
+
+Book Management Module: Responsible for adding, removing, searching, and displaying books in the library.
+Member Management Module: Handles the addition, removal, searching, and display of library members.
+Borrowing/Returning Module: Manages the borrowing and returning of books by members, including tracking due dates and return status.
+User Interface Module: Provides a user-friendly menu-based interface for interacting with the system.
+Error Handling Module: Handles input validation and error messages to ensure data integrity and provide informative prompts to users.
+Data Storage Module: Manages the storage and retrieval of book and member information from a file for persistent storage.
+Class Design:
+
+Book Class: Represents a book with attributes such as title, author, ISBN, publication year, and availability status.
+Member Class: Represents a library member with attributes such as name, age, contact information, and borrowing history.
+Library Class: Acts as a central controller that coordinates interactions between different modules and manages the overall system state.
+UserInterface Class: Handles user input and output, providing menus and prompts for system interactions.
+FileManager Class: Handles reading and writing of book and member information to a file for persistent storage.
+ErrorHandling Class: Provides error handling and validation functions to ensure data integrity and display informative messages.
+Data Structures:
+
+Book List: A collection (e.g., array, vector) to store and manage the books in the library.
+Member List: A collection to store and manage the library members.
+Borrowed Books List: A collection to track the borrowed books by members, including due dates and return status.
+Interaction Flow:
+
+The User Interface Module presents a menu to the user, allowing them to select different options (e.g., add book, remove member, borrow book).
+Based on the user's selection, the Library Class invokes the corresponding methods in the relevant modules.
+The Book Management Module interacts with the Book List to perform operations such as adding, removing, and searching for books.
+The Member Management Module interacts with the Member List to perform operations such as adding, removing, and searching for members.
+The Borrowing/Returning Module interacts with the Book List, Member List, and Borrowed Books List to manage the borrowing and returning of books.
+The Error Handling Module validates user input and displays appropriate error messages if necessary.
+The Data Storage Module reads and writes book and member information to a file using the FileManager Class for persistent storage.
+
+--------------------------------------------------------------------- Class Diagrams ---------------------------------------------------------------------
+
+
++------------------------------------------------+
+|                     Library                    |
++------------------------------------------------+
+| - books: Book[]                 		 |
+| - members: Member[]             		 |
+| - borrowedBooks: BorrowedBook[]		 |
++------------------------------------------------+
+| + addBook(book: Book): void    		 |
+| + removeBook(book: Book): void  	         |
+| + searchBooks(criteria: string): Book[] 	 |
+| + addMember(member: Member): void 		 |
+| + removeMember(member: Member): void		 |
+| + searchMembers(criteria: string): Member[]    |
+| + borrowBook(book: Book, member: Member): void |
+| + returnBook(book: Book, member: Member): void |
+| + displayAllBooks(): void      		 |
+| + displayAllMembers(): void   	         |
++------------------------------------------------+
+
++-----------------------------------------+
+|                   Book                  |
++-----------------------------------------+
+| - title: string                         |
+| - author: string                        |
+| - isbn: string                          |
+| - publicationYear: int                  |
+| - isAvailable: bool                     |
++-----------------------------------------+
+| + getTitle(): string                    |
+| + getAuthor(): string                   |
+| + getISBN(): string                     |
+| + getPublicationYear(): int             |
+| + setIsAvailable(available: bool): void |
++-----------------------------------------+
+                     
++----------------------------------------------------+
+|                      Member                        |
++----------------------------------------------------+
+| - name: string                                     |
+| - age: int                                         |
+| - contactInfo: string                              |
+| - borrowedBooks: BorrowedBook[]                    |
++----------------------------------------------------+
+| + getName(): string                                |
+| + getAge(): int                                    |
+| + getContactInfo(): string                         |
+| + addBorrowedBook(book: Book, dueDate: Date): void |
+| + removeBorrowedBook(book: Book): void             |
+| + getBorrowedBooks(): BorrowedBook[]               |
++----------------------------------------------------+
+
++------------------------------------+
+|            BorrowedBook            |
++------------------------------------+
+| - book: Book                       |
+| - dueDate: Date                    |
++------------------------------------+
+| + getBook(): Book                  |
+| + getDueDate(): Date               |
++------------------------------------+
