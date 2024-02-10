@@ -83,8 +83,24 @@ public:
         borrowed_books.push_back(bbob);
         return;
     }
-    void remove_boorowed_book(){
-        return;
+    Book remove_boorowed_book(string isbn_to_search_for){
+        Book b;
+        long long z=borrowed_books.size();
+        for (long long y=0 ; y<z ; y++)
+        {
+            b=borrowed_books.at(y);
+            if (b.get_ISBN()==isbn_to_search_for)
+            {
+                cout<<"The book has been found in the borrowed book section in the member's account:\n";
+                cout << "The book " << b.get_title() << " has been found .\n";
+                cout << "The author is: " << b.get_author() << " .\n";
+                cout << "The ISBN is: " << b.get_ISBN() << " .\n";
+                cout << "The publication year is: " << b.get_publicationyear() << " .\n";
+                cout << "--------------------------------------------------------------\n\n";
+                borrowed_books.erase(borrowed_books.begin()+y);
+                return b;
+            }
+        }
     }
     vector<Borrowed_book> get_borrowed_books() {
         return borrowed_books;
@@ -187,7 +203,7 @@ public:
         long long low = 0;
         Mi.Options_for_searching_books();
         cin >> opt;
-        system("CLS");
+        // system("CLS");
         if (opt==1)
         {
             index="title";
@@ -207,7 +223,7 @@ public:
         }
         cout << "Please enter the " << index << " of the book you want to search for:\n";
         cin >> index;
-        system("CLS");
+        // system("CLS");
         while (low <= high) {
             long long mid = low + (high - low) / 2;
             switch (opt) {
@@ -225,7 +241,7 @@ public:
                 break;
             case 2:
                 if (book.at(mid).get_author() == index) {
-                    search_member_return(mid);
+                    search_book_return(mid);
                     return;
                 } else if (book.at(mid).get_author() < index) {
                     low = mid + 1;
@@ -235,7 +251,7 @@ public:
                 break;
             case 3:
                 if (book.at(mid).get_ISBN() == index) {
-                    search_member_return(mid);
+                    search_book_return(mid);
                     return;
                 } else if (book.at(mid).get_ISBN() < index) {
                     low = mid + 1;
@@ -308,7 +324,7 @@ public:
         long long high = member.size(), low = 0;
         Mi.Options_for_searching_members();
         cin >> opt;
-        system("CLS");
+        // system("CLS");
         if (opt==1)
         {
             index="name";
@@ -399,6 +415,7 @@ public:
 
     void return_a_book() {
         string index, isbn;
+        Book b;
         long long x = member.size(), i = 0;
         cout<<"Please enter the name of the member:\n";
         cin >> index;
@@ -414,34 +431,10 @@ public:
                     }
                     cout << "Please enter the ISBN of the book you want to return:\n";
                     cin >> isbn;
-                    Member me;
-                    me=member.at(i);
-                    vector<Borrowed_book> bbo;
-                    bbo = me.get_borrowed_books();
-                    long long z=bbo.size(),y=0;
-                    Borrowed_book bbbo;
-                    while (y<=z)
-                    {
-                        bbbo=bbo.at(y);
-                        if (bbbo.get_ISBN()==isbn)
-                        {
-                            cout<<"The book has been found in the borrowed book section in the member's account:\n";
-                            Book bo;
-                            cout << "The book " << bo.get_title() << " has been found .\n";
-                            cout << "The author is: " << bo.get_author() << " .\n";
-                            cout << "The ISBN is: " << bo.get_ISBN() << " .\n";
-                            cout << "The publication year is: " << bo.get_publicationyear() << " .\n";
-                            cout << "--------------------------------------------------------------\n\n";
-                            book.push_back(bo);
-                            bubble_sort_for_books();
-                            bbo.erase(bbo.begin()+y);
-                            cout<<"The book has been returned.\n";
-                            return;
-                        }
-                        y++;
-                    }
-                    cout<<"The book wasn't found in the member's boorowed books saves.\n";
-                    return;
+                    b=member.at(i).remove_boorowed_book(isbn);
+                    book.push_back(b);
+                    cout<<"The book has been returned.\n";
+                    bubble_sort_for_books();
                 }
                 i++;
             }
@@ -456,7 +449,7 @@ public:
             return;
         }
         long long x = book.size(), i = 0;
-        while (i <= x)
+        while (i < x)
         {
             cout << "The " << i + 1 << " book is:\n";
             cout << "The title is " << book.at(i).get_title() << " .\n";
@@ -476,9 +469,9 @@ public:
             return;
         }
         long long x = member.size(), i = 0;
-        while (i <= x)
+        while (i < x)
         {
-            cout << "The " << i + 1 << " book is:\n";
+            cout << "The " << i + 1 << " member is:\n";
             cout << "The name is " << member.at(i).get_name() << " .\n";
             cout << "The age is " << member.at(i).get_age() << " .\n";
             cout << "The contact info is " << member.at(i).get_contactinfo() << " .\n";
@@ -498,18 +491,18 @@ int main()
     do {
         M.Options();
         cin >> opt;
-        system("CLS");
+        // system("CLS");
         switch (opt)
         {
         case 1:
             M.Options_for_books();
             cin >> opt;
-            system("CLS");
+            // system("CLS");
             if (opt == 1)
             {
                 M.Options_for_management_of_books();
                 cin >> opt;
-                system("CLS");
+                // system("CLS");
                 if (opt == 1)
                 {
                     cout<<"Please enter the number of books to add:\n";
@@ -530,7 +523,7 @@ int main()
                 }
                 else
                 {
-                    system("CLS");
+                    // system("CLS");
                     cout << "Wrong choise.\n";
                 }
             }
@@ -538,7 +531,7 @@ int main()
             {
                 M.Options_for_borrowing_books();
                 cin >> opt;
-                system("CLS");
+                // system("CLS");
                 if (opt == 1)
                 {
                     cout<<"Please enter the number of books to borrow:\n";
@@ -573,7 +566,7 @@ int main()
             }
             else if (opt == 4)
             {
-                system("CLS");
+                // system("CLS");
                 d.display_all_books();
             }
             else
@@ -584,12 +577,12 @@ int main()
         case 2:
             M.Options_for_members();
             cin >> opt;
-            system("CLS");
+            // system("CLS");
             if (opt == 1)
             {
                 M.Options_for_management_of_members();
                 cin >> opt;
-                system("CLS");
+                // system("CLS");
                 if (opt == 1)
                 {
                     cout<<"Please enter the number of members to add:\n";
@@ -624,7 +617,7 @@ int main()
             }
             else if (opt == 3)
             {
-                system("CLS");
+                // system("CLS");
                 d.display_all_members();
             }
             else
