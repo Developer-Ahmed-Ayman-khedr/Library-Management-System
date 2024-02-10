@@ -169,7 +169,7 @@ public:
         long long x = book.size(), i = 0;
         cout << "Please enter the title of the book you want to remove:\n";
         cin >> index;
-        while (i <= x)
+        while (i < x)
         {
             if (book.at(i).get_title() == index)
             {
@@ -283,16 +283,16 @@ public:
     }
 
     void remove_member() {
-        if (book.size() == 0)
+        if (member.size() == 0)
         {
-            cout << "The library has no books.\n";
+            cout << "The library has no members.\n";
             return;
         }
         string index;
         long long x = member.size(), i = 0;
         cout << "Please enter the name of the member you want to remove:\n";
         cin >> index;
-        while (i <= x)
+        while (i < x)
         {
             if (member.at(i).get_name() == index)
             {
@@ -314,6 +314,7 @@ public:
         return;
     }
 
+    // test
     void search_member_binary() {
         if (member.size() == 0) {
             cout << "The library has no members.\n";
@@ -338,7 +339,7 @@ public:
             cout<<"Wrong choise:\n";
             return;
         }
-        cout << "Please enter the " << opt << " of the member you want to search for:\n";
+        cout << "Please enter the " << index << " of the member you want to search for:\n";
         cin >> index;
         while (low <= high) {
             long long mid = low + (high - low) / 2;
@@ -371,6 +372,7 @@ public:
         cout << "The member is not in the library.\n";
     }
 
+    // test
     void borrow_a_book() {
         string index, isbn;
         int d, m;
