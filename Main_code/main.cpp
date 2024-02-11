@@ -189,7 +189,7 @@ public:
         long long low = 0;
         Mi.Options_for_searching_books();
         cin >> opt;
-        // system("CLS");
+        system("CLS");
         if (opt==1)
         {
             index="title";
@@ -209,7 +209,7 @@ public:
         }
         cout << "Please enter the " << index << " of the book you want to search for:\n";
         cin >> index;
-        // system("CLS");
+        system("CLS");
         while (low <= high) {
             long long mid = low + (high - low) / 2;
             switch (opt) {
@@ -310,7 +310,7 @@ public:
         long long high = member.size(), low = 0;
         Mi.Options_for_searching_members();
         cin >> opt;
-        // system("CLS");
+        system("CLS");
         if (opt==1)
         {
             index="name";
@@ -548,18 +548,18 @@ int main()
     do {
         M.Options();
         cin >> opt;
-        // system("CLS");
+        system("CLS");
         switch (opt)
         {
         case 1:
             M.Options_for_books();
             cin >> opt;
-            // system("CLS");
+            system("CLS");
             if (opt == 1)
             {
                 M.Options_for_management_of_books();
                 cin >> opt;
-                // system("CLS");
+                system("CLS");
                 if (opt == 1)
                 {
                     cout<<"Please enter the number of books to add:\n";
@@ -580,7 +580,7 @@ int main()
                 }
                 else
                 {
-                    // system("CLS");
+                    system("CLS");
                     cout << "Wrong choise.\n";
                 }
             }
@@ -588,7 +588,7 @@ int main()
             {
                 M.Options_for_borrowing_books();
                 cin >> opt;
-                // system("CLS");
+                system("CLS");
                 if (opt == 1)
                 {
                     cout<<"Please enter the number of books to borrow:\n";
@@ -609,7 +609,7 @@ int main()
                 }
                 else if (opt == 3)
                 {
-                    // system("CLS");
+                    system("CLS");
                     d.display_all_borrowed_books();
                 }
                 else
@@ -628,7 +628,7 @@ int main()
             }
             else if (opt == 4)
             {
-                // system("CLS");
+                system("CLS");
                 d.display_all_books();
             }
             else
@@ -639,12 +639,12 @@ int main()
         case 2:
             M.Options_for_members();
             cin >> opt;
-            // system("CLS");
+            system("CLS");
             if (opt == 1)
             {
                 M.Options_for_management_of_members();
                 cin >> opt;
-                // system("CLS");
+                system("CLS");
                 if (opt == 1)
                 {
                     cout<<"Please enter the number of members to add:\n";
@@ -679,7 +679,7 @@ int main()
             }
             else if (opt == 3)
             {
-                // system("CLS");
+                system("CLS");
                 d.display_all_members();
             }
             else
