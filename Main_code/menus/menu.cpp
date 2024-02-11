@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 struct Menus {
+
     void Options() {
         cout << "Please enter what to do:\n";
         cout << "1.Books:\n";
@@ -11,7 +12,7 @@ struct Menus {
     void Options_for_books() {
         cout << "Book section:\n";
         cout << "1.Manage Books:\n";
-        cout << "2.Borrow Books:\n";
+        cout << "2.Borrow or Return Books:\n";
         cout << "3.Search for Books:\n";
         cout << "4.Display Books:\n";
     }
@@ -26,6 +27,7 @@ struct Menus {
         cout << "Book borrowing section:\n";
         cout << "1.Borrow a Book:\n";
         cout << "2.Return a Book:\n";
+        cout << "3.Show borrowed Books:\n";
     }
     
     void Options_for_searching_books() {

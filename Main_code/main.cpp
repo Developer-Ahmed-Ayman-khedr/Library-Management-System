@@ -36,16 +36,16 @@ public:
 
 class Borrowed_book : public Book {
 private:
-    vector<Book> book;
+    Book book_that_has_been_borrowed;
     int day, month;
 public:
     void set_borrowed_book(int da, int mo,Book b) {
         day = da;
         month = mo;
-        book.push_back(b);
+        book_that_has_been_borrowed=b;
     }
-    vector<Book> get_book() {
-        return book;
+    Book get_book() {
+        return book_that_has_been_borrowed;
     }
     int get_day() {
         return day;
@@ -77,31 +77,17 @@ public:
     string get_contactinfo() {
         return contactinfo;
     }
-    void add_boorowed_book(Borrowed_book bb){
+    void add_boorowed_books(Borrowed_book bb){
         Borrowed_book bbob;
         bbob=bb;
         borrowed_books.push_back(bbob);
         return;
     }
-    Book remove_boorowed_book(string isbn_to_search_for){
-        Book b;
-        long long z=borrowed_books.size();
-        for (long long y=0 ; y<z ; y++)
-        {
-            b=borrowed_books.at(y);
-            if (b.get_ISBN()==isbn_to_search_for)
-            {
-                cout<<"The book has been found in the borrowed book section in the member's account:\n";
-                cout << "The book " << b.get_title() << " has been found .\n";
-                cout << "The author is: " << b.get_author() << " .\n";
-                cout << "The ISBN is: " << b.get_ISBN() << " .\n";
-                cout << "The publication year is: " << b.get_publicationyear() << " .\n";
-                cout << "--------------------------------------------------------------\n\n";
-                borrowed_books.erase(borrowed_books.begin()+y);
-                return b;
-            }
-        }
+    void set_borrowed_book_after_removal(vector<Borrowed_book> bbbb){
+        borrowed_books=bbbb;
+        return;
     }
+
     vector<Borrowed_book> get_borrowed_books() {
         return borrowed_books;
     }
@@ -313,8 +299,7 @@ public:
         cout << "--------------------------------------------------------------\n\n";
         return;
     }
-
-    // test
+    
     void search_member_binary() {
         if (member.size() == 0) {
             cout << "The library has no members.\n";
@@ -371,9 +356,13 @@ public:
         }
         cout << "The member is not in the library.\n";
     }
-
-    // test
+    
     void borrow_a_book() {
+        if (book.size() == 0)
+        {
+            cout << "The library has no books.\n";
+            return;
+        }
         string index, isbn;
         int d, m;
         long long x = member.size(), i = 0,z=book.size(),y=0;
@@ -383,7 +372,7 @@ public:
             {
                 if (member.at(i).get_name() == index)
                 {
-                    cout<<"----------The member is : ----------\n";
+                    cout<<"----------The member is "<<member.at(i).get_name()<<" : ----------\n";
                     cout<<"Please enter the day:\n";
                     cin>>d;
                     cout<<"Please enter the month:\n";
@@ -400,8 +389,9 @@ public:
                             Borrowed_book bbo;
                             bbo.set_borrowed_book(d,m,b);
                             Member me;
-                            member.at(i).add_boorowed_book(bbo);
+                            member.at(i).add_boorowed_books(bbo);
                             book.erase(book.begin()+i);
+                            cout<<"The book has been borrowed by the user "<<member.at(i).get_name()<<" .\n";
                             return;
                         }
                         y++;
@@ -416,8 +406,7 @@ public:
     }
 
     void return_a_book() {
-        string index, isbn;
-        Book b;
+        string index;
         long long x = member.size(), i = 0;
         cout<<"Please enter the name of the member:\n";
         cin >> index;
@@ -431,12 +420,35 @@ public:
                         cout<<"The member has not borrowed any books:\n";
                         return;
                     }
+                    string isbnn;
+                    Book booo;
+                    vector<Borrowed_book> bb;
+                    bb=member.at(i).get_borrowed_books();
+                    long long z=member.at(i).get_borrowed_books().size(), y=0;
                     cout << "Please enter the ISBN of the book you want to return:\n";
-                    cin >> isbn;
-                    b=member.at(i).remove_boorowed_book(isbn);
-                    book.push_back(b);
-                    cout<<"The book has been returned.\n";
-                    bubble_sort_for_books();
+                    cin >> isbnn;
+                    while( y<z )
+                    {
+                        booo=bb.at(y).get_book();
+                        if (booo.get_ISBN()==isbnn)
+                        {
+                            cout<<"The borrowed book section in the member's "<<member.at(i).get_name()<<" account:\n";
+                            cout << "The book " << booo.get_title() << " has been found .\n";
+                            cout << "The book " << booo.get_title() << " has been borrowd since "<<bb.at(i).get_day()<<"/"<<bb.at(i).get_month()<<" .\n";
+                            cout << "The author is: " << booo.get_author() << " .\n";
+                            cout << "The ISBN is: " << booo.get_ISBN() << " .\n";
+                            cout << "The publication year is: " << booo.get_publicationyear() << " .\n";
+                            cout << "--------------------------------------------------------------\n\n";
+                            bb.erase(bb.begin()+y);
+                            member.at(i).set_borrowed_book_after_removal(bb);
+                            book.push_back(booo);
+                            cout<<"The book has been returned.\n";
+                            bubble_sort_for_books();
+                            return;
+                            
+                        }
+                        y++;
+                    }
                 }
                 i++;
             }
@@ -462,6 +474,49 @@ public:
             i++;
         }
         return;
+    }
+    
+    void display_all_borrowed_books() {
+        if (member.size() == 0)
+        {
+            cout << "The library has no members.\n";
+            return;
+        }
+        string index;
+        long long x = member.size(), i = 0;
+        cout<<"Please enter the name of the member:\n";
+        cin >> index;
+        while (i < x)
+            {
+                if (member.at(i).get_name() == index)
+                {
+                    if (member.at(i).get_borrowed_books().size()==0)
+                    {
+                        cout<<"The member has not borrowed any books.\n";
+                        return;
+                    }
+                    vector<Borrowed_book> bb;
+                    Book bbo;
+                    long long z=member.at(i).get_borrowed_books().size(), y=0;
+                    bb=member.at(i).get_borrowed_books();
+                    cout<<"The borrowed book section in the member's "<<member.at(i).get_name()<<" account:\n";
+                    while( y<z )
+                    {
+                        bbo=bb.at(y).get_book();
+                        cout << "The book "<<y+1<< " has been found .\n";
+                        cout << "The book " <<bbo.get_title()<< " has been borrowd since "<<bb.at(y).get_day()<<" / "<<bb.at(y).get_month()<<" .\n";
+                        cout << "The author is: " <<bbo.get_author()<< " .\n";
+                        cout << "The ISBN is: " <<bbo.get_ISBN()<< " .\n";
+                        cout << "The publication year is: " <<bbo.get_publicationyear()<< " .\n";
+                        cout << "--------------------------------------------------------------\n\n";
+                        y++;
+                    }
+                    return;
+                }                
+                i++;
+            }
+            cout<<"The member has not been found in the library.\n";
+            return;
     }
 
     void display_all_members() {
@@ -551,6 +606,11 @@ int main()
                     {
                         d.return_a_book();
                     }
+                }
+                else if (opt == 3)
+                {
+                    // system("CLS");
+                    d.display_all_borrowed_books();
                 }
                 else
                 {
