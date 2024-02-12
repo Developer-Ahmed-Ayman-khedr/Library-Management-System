@@ -101,6 +101,23 @@ private:
     vector<Borrowed_book>borrow_book;
 public:
 
+    void search_book_return(long long ind) {
+        cout << "The book " << book.at(ind).get_title() << " has been found at index " << ind + 1 << " .\n";
+        cout << "The author is: " << book.at(ind).get_author() << " .\n";
+        cout << "The ISBN is: " << book.at(ind).get_ISBN() << " .\n";
+        cout << "The publication year is: " << book.at(ind).get_publicationyear() << " .\n";
+        cout << "--------------------------------------------------------------\n\n";
+        return;
+    }
+
+    void search_member_return(long long ind) {
+        cout << "The member " << member.at(ind).get_name() << " has been found at index " << ind + 1 << ".\n";
+        cout << "The age is: " << member.at(ind).get_age() << " .\n";
+        cout << "The contact info is: " << member.at(ind).get_contactinfo() << " .\n";
+        cout << "--------------------------------------------------------------\n\n";
+        return;
+    }
+    
     void bubble_sort_for_books() {
         long long x = book.size();
         bool flage;
@@ -152,29 +169,24 @@ public:
             return;
         }
         string index;
-        long long x = book.size(), i = 0;
+        long long high = book.size();
+        long long low = 0;
         cout << "Please enter the title of the book you want to remove:\n";
         cin >> index;
-        while (i < x)
-        {
-            if (book.at(i).get_title() == index)
-            {
-                cout << "The book " << book.at(i).get_title() << " has been found and will be deleted.\n";
-                book.erase(book.begin() + i);
+        while (low < high) {
+            long long mid = low + (high - low) / 2;
+            if (book.at(mid).get_title() == index) {
+                search_book_return(mid);
                 return;
             }
-            i++;
+            else if (book.at(mid).get_title() < index) {
+                low = mid + 1;
+            }
+            else {
+                high = mid - 1;
+            }
         }
         cout << "The book is not in the library.\n";
-        return;
-    }
-
-    void search_book_return(long long ind) {
-        cout << "The book " << book.at(ind).get_title() << " has been found at index " << ind + 1 << " .\n";
-        cout << "The author is: " << book.at(ind).get_author() << " .\n";
-        cout << "The ISBN is: " << book.at(ind).get_ISBN() << " .\n";
-        cout << "The publication year is: " << book.at(ind).get_publicationyear() << " .\n";
-        cout << "--------------------------------------------------------------\n\n";
         return;
     }
     
@@ -185,8 +197,7 @@ public:
         }
         string index;
         int opt;
-        long long high = book.size();
-        long long low = 0;
+        
         Mi.Options_for_searching_books();
         cin >> opt;
         system("CLS");
@@ -209,8 +220,9 @@ public:
         }
         cout << "Please enter the " << index << " of the book you want to search for:\n";
         cin >> index;
+        long long high = book.size(), low = 0;
         system("CLS");
-        while (low <= high) {
+        while (low < high) {
             long long mid = low + (high - low) / 2;
             switch (opt) {
             case 1:
@@ -275,28 +287,22 @@ public:
             return;
         }
         string index;
-        long long x = member.size(), i = 0;
         cout << "Please enter the name of the member you want to remove:\n";
         cin >> index;
-        while (i < x)
-        {
-            if (member.at(i).get_name() == index)
-            {
-                cout << "The member " << member.at(i).get_name() << " has been found and wil be deleted.\n";
-                member.erase(member.begin() + i);
+        system("CLS");
+        long long high = member.size(), low = 0;
+        while (low < high) {
+            long long mid = low + (high - low) / 2;
+            if (member.at(mid).get_name() == index) {
+                search_member_return(mid);
                 return;
+            } else if (member.at(mid).get_name() < index) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
             }
-            i++;
         }
         cout << "The member is not in the library.\n";
-        return;
-    }
-
-    void search_member_return(long long ind) {
-        cout << "The member " << member.at(ind).get_name() << " has been found at index " << ind + 1 << ".\n";
-        cout << "The age is: " << member.at(ind).get_age() << " .\n";
-        cout << "The contact info is: " << member.at(ind).get_contactinfo() << " .\n";
-        cout << "--------------------------------------------------------------\n\n";
         return;
     }
     
@@ -307,7 +313,6 @@ public:
         }
         string index;
         int opt;
-        long long high = member.size(), low = 0;
         Mi.Options_for_searching_members();
         cin >> opt;
         system("CLS");
@@ -326,7 +331,9 @@ public:
         }
         cout << "Please enter the " << index << " of the member you want to search for:\n";
         cin >> index;
-        while (low <= high) {
+        system("CLS");
+        long long high = member.size(), low = 0;
+        while (low < high) {
             long long mid = low + (high - low) / 2;
             switch (opt) {
             case 1:
@@ -368,7 +375,7 @@ public:
         long long x = member.size(), i = 0,z=book.size(),y=0;
         cout<<"Please enter the name of the member:\n";
         cin >> index;
-        while (i <= x)
+        while (i < x)
             {
                 if (member.at(i).get_name() == index)
                 {
@@ -379,7 +386,7 @@ public:
                     cin>>m;
                     cout << "Please enter the ISBN of the book you want to borrow:\n";
                     cin >> isbn;
-                    while (y<=z)
+                    while ( y < z )
                     {
                         if (book.at(i).get_ISBN() == isbn)
                         {
@@ -410,7 +417,7 @@ public:
         long long x = member.size(), i = 0;
         cout<<"Please enter the name of the member:\n";
         cin >> index;
-        while (i <= x)
+        while (i < x)
             {
                 if (member.at(i).get_name() == index)
                 {
@@ -465,7 +472,7 @@ public:
         long long x = book.size(), i = 0;
         while (i < x)
         {
-            cout << "The " << i + 1 << " book is:\n";
+            cout << "Book " << i + 1 << " is:\n";
             cout << "The title is " << book.at(i).get_title() << " .\n";
             cout << "The author is " << book.at(i).get_author() << " .\n";
             cout << "The ISBN is " << book.at(i).get_ISBN() << " .\n";
@@ -528,7 +535,7 @@ public:
         long long x = member.size(), i = 0;
         while (i < x)
         {
-            cout << "The " << i + 1 << " member is:\n";
+            cout << "Member " << i + 1 << " is:\n";
             cout << "The name is " << member.at(i).get_name() << " .\n";
             cout << "The age is " << member.at(i).get_age() << " .\n";
             cout << "The contact info is " << member.at(i).get_contactinfo() << " .\n";
@@ -565,8 +572,9 @@ int main()
                 {
                     cout<<"Please enter the number of books to add:\n";
                     cin>>number;
-                    for (int q = 0; q < number; q++)
+                    for (int q = 1; q <= number; q++)
                     {
+                        cout<<"Book "<<q<<" :\n";
                         d.add_book();
                     }                    
                 }
@@ -574,8 +582,9 @@ int main()
                 {
                     cout<<"Please enter the number of books to remove:\n";
                     cin>>number;
-                    for (int q = 0; q < number; q++)
+                    for (int q = 1; q <= number; q++)
                     {
+                        cout<<"Book "<<q<<" :\n";
                         d.remove_book();
                     }
                 }
@@ -594,8 +603,9 @@ int main()
                 {
                     cout<<"Please enter the number of books to borrow:\n";
                     cin>>number;
-                    for (int q = 0; q < number; q++)
+                    for (int q = 1; q <= number; q++)
                     {
+                        cout<<"Book "<<q<<" :\n";
                         d.borrow_a_book();
                     }
                 }
@@ -603,8 +613,9 @@ int main()
                 {
                     cout<<"Please enter the number of books to return:\n";
                     cin>>number;
-                    for (int q = 0; q < number; q++)
+                    for (int q = 1; q <= number; q++)
                     {
+                        cout<<"Book "<<q<<" :\n";
                         d.return_a_book();
                     }
                 }
@@ -622,8 +633,9 @@ int main()
             {
                 cout<<"Please enter the number of books to search for:\n";
                     cin>>number;
-                    for (int q = 0; q < number; q++)
+                    for (int q = 1; q <= number; q++)
                     {
+                        cout<<"Book "<<q<<" :\n";
                         d.search_book_binary();
                     }
             }
@@ -650,8 +662,9 @@ int main()
                 {
                     cout<<"Please enter the number of members to add:\n";
                     cin>>number;
-                    for (int q = 0; q < number; q++)
+                    for (int q = 1; q <= number; q++)
                     {
+                        cout<<"Member "<<q<<" :\n";
                         d.add_member();
                     }
                 }
@@ -659,8 +672,9 @@ int main()
                 {
                     cout<<"Please enter the number of members to remove:\n";
                     cin>>number;
-                    for (int q = 0; q < number; q++)
+                    for (int q = 1; q <= number; q++)
                     {
+                        cout<<"Member "<<q<<" :\n";
                         d.remove_member();
                     }
                 }
@@ -673,8 +687,9 @@ int main()
             {
                 cout<<"Please enter the number of members to search for:\n";
                     cin>>number;
-                    for (int q = 0; q < number; q++)
+                    for (int q = 1; q <= number; q++)
                     {
+                        cout<<"Member "<<q<<" :\n";
                         d.search_member_binary();
                     }
             }
@@ -697,6 +712,7 @@ int main()
         }
         cout << "If you want to continue:\nPlease enter y:\n";
         cin >> Continue;
+        system("CLS");
     } while (Continue == 'Y' || Continue == 'y');
     return 0;
 }
